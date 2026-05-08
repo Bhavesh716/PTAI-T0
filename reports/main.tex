@@ -1,0 +1,581 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=0.85in]{geometry}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage{pagecolor}
+
+\definecolor{primary}{HTML}{0F172A}
+\definecolor{secondary}{HTML}{1E293B}
+\definecolor{accent}{HTML}{2563EB}
+\definecolor{textgray}{HTML}{475569}
+\definecolor{lightbg}{HTML}{F8FAFC}
+
+\pagecolor{white}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent
+}
+
+\setstretch{1.15}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{textgray}{Market Sentiment vs Trader Behavior}}
+\fancyhead[R]{\textcolor{textgray}{Bhavesh Gudlani}}
+\fancyfoot[C]{\thepage}
+
+\titleformat{\section}
+{\Large\bfseries\color{primary}}
+{}
+{0em}
+{}
+
+\titleformat{\subsection}
+{\large\bfseries\color{accent}}
+{}
+{0em}
+{}
+
+\setlist[itemize]{noitemsep, topsep=2pt}
+
+\renewcommand{\contentsname}{\textcolor{primary}{Report Overview}}
+
+\setlength{\cftbeforesecskip}{2px}
+\renewcommand{\cftsecfont}{\color{textgray}}
+\renewcommand{\cftsecpagefont}{\color{textgray}}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{tikzpicture}[remember picture,overlay]
+\fill[primary] (current page.north west)
+rectangle ([yshift=-5cm]current page.north east);
+\end{tikzpicture}
+
+\vspace*{2.5cm}
+
+\begin{center}
+
+{\Huge\bfseries\color{white}
+Market Sentiment vs Trader Behavior
+}
+
+\vspace{0.5cm}
+
+{\Large\color{white}
+A Data-Driven Analysis of Hyperliquid Trading Activity
+}
+
+\vspace{1cm}
+
+{\large\color{white}
+Behavioral Finance • Quantitative Analysis • Market Intelligence
+}
+
+\vspace{3cm}
+
+\includegraphics[width=0.9\textwidth]{sentiment_distribution.png}
+
+\vfill
+
+\begin{tcolorbox}[
+colback=lightbg,
+colframe=accent,
+width=0.8\textwidth,
+arc=8pt
+]
+
+\centering
+
+\textbf{Submitted By:} Bhavesh Gudlani
+
+\vspace{0.2cm}
+
+Data Science Internship Assessment Submission
+
+\vspace{0.2cm}
+
+Python • Pandas • Scikit-learn • Behavioral Analytics
+
+\end{tcolorbox}
+
+\vspace{1cm}
+
+{\large \today}
+
+\end{center}
+
+\end{titlepage}
+
+{
+\small
+\tableofcontents
+}
+\vspace{1.0 cm}
+\hrule
+\newpage
+
+% -------------------------------------------------
+
+\section{Executive Summary}
+
+This project investigates the relationship between cryptocurrency market sentiment and trader behavior using historical trading activity from Hyperliquid combined with the Bitcoin Fear \& Greed Index.
+
+The analysis explores how emotional market conditions influence trader profitability, activity levels, execution patterns, and behavioral stability. Using quantitative analytics, clustering techniques, correlation analysis, and sentiment transition modeling, the study identifies important behavioral patterns across different market phases.
+
+The results indicate that trader behavior varies significantly across emotional market conditions. Fear-driven markets demonstrated higher average profitability, while greed-oriented conditions often resulted in increased activity but weaker consistency. The study also identified distinct trader segments ranging from highly profitable aggressive participants to lower-performing inconsistent traders.
+
+Overall, the findings highlight the importance of sentiment-aware trading strategies and behavioral risk management within volatile cryptocurrency markets.
+
+% -------------------------------------------------
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Project Objective}
+
+The objective of this project is to analyze the relationship between cryptocurrency market sentiment and trader behavior using historical trading activity from Hyperliquid alongside the Bitcoin Fear \& Greed Index.
+
+This study focuses on understanding how emotional market conditions such as Fear, Greed, Extreme Fear, and Extreme Greed influence trader profitability, trading activity, execution patterns, and overall behavioral dynamics.
+
+Through quantitative analysis, behavioral profiling, clustering techniques, and sentiment transition analysis, the project aims to uncover meaningful patterns that can support smarter trading strategies and improved risk management in volatile crypto markets.
+
+% -------------------------------------------------
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Dataset Description}
+
+Two primary datasets were used in this analysis:
+
+\subsection{Bitcoin Fear \& Greed Index Dataset}
+
+The sentiment dataset contained daily market sentiment classifications with the following attributes:
+
+\begin{itemize}
+    \item Timestamp
+    \item Sentiment Value
+    \item Sentiment Classification
+    \item Date
+\end{itemize}
+
+The dataset categorized market conditions into:
+
+\begin{itemize}
+    \item Extreme Fear
+    \item Fear
+    \item Neutral
+    \item Greed
+    \item Extreme Greed
+\end{itemize}
+
+\subsection{Historical Trader Dataset}
+
+The trading dataset contained execution-level trading activity from Hyperliquid including:
+
+\begin{itemize}
+    \item Account Information
+    \item Coin Traded
+    \item Execution Price
+    \item Trade Size
+    \item Trading Direction
+    \item Closed Profit and Loss
+    \item Fees
+    \item Transaction Details
+    \item Trade Timestamps
+\end{itemize}
+
+The dataset covered trading activity from January 2024 to May 2025.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Methodology}
+
+The project followed a structured analytical workflow:
+
+\begin{enumerate}
+    \item Data Loading and Inspection
+    \item Data Cleaning and Standardization
+    \item Temporal Alignment of Sentiment and Trading Data
+    \item Feature Engineering
+    \item Exploratory Data Analysis
+    \item Behavioral Analysis
+    \item Trader Segmentation using KMeans Clustering
+    \item Correlation and Risk Analysis
+    \item Sentiment Transition Analysis
+    \item Strategic Insight Extraction
+\end{enumerate}
+
+The analysis was implemented using Python libraries including Pandas, NumPy, Matplotlib, Seaborn, and Scikit-learn.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Data Cleaning and Preprocessing}
+
+Several preprocessing steps were performed to ensure consistency and analytical reliability.
+
+\begin{itemize}
+    \item Standardized column names across datasets
+    \item Converted timestamps into datetime format
+    \item Extracted date-level information for merging
+    \item Filtered sentiment data to match trading date ranges
+    \item Merged datasets using temporal alignment
+    \item Validated merged dataset integrity
+    \item Created behavioral and profitability features
+\end{itemize}
+
+The merged dataset successfully aligned trader activity with corresponding market sentiment states.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Feature Engineering}
+
+Several derived features were created to improve behavioral analysis capabilities.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|m{4cm}|m{9cm}|}
+\hline
+\textbf{Feature} & \textbf{Purpose} \\
+\hline
+is\_profit & Binary indicator of profitable trades \\
+\hline
+trade\_value\_ratio & Profitability efficiency relative to trade size \\
+\hline
+fee\_ratio & Fee efficiency metric \\
+\hline
+is\_buy & Binary directional indicator \\
+\hline
+sentiment\_score & Numerical sentiment intensity value \\
+\hline
+high\_fear / high\_greed & Emotional market state indicators \\
+\hline
+\end{tabular}
+\end{table}
+
+These engineered features enabled deeper behavioral and performance-level insights.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Exploratory Data Analysis}
+
+\subsection{Market Sentiment Distribution}
+
+The dataset was dominated by Fear and Greed market states, while Extreme Fear periods occurred less frequently.
+
+This distribution demonstrates that most trading activity occurred during emotionally active market environments.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{pnl_distribution.png}
+\caption{Distribution of Closed Profit and Loss}
+\end{figure}
+
+
+\subsection{Closed Profit and Loss Distribution}
+
+The pnl distribution exhibited heavy skewness with significant outliers.
+
+Most trades generated relatively small pnl outcomes, while a smaller subset produced disproportionately large profits or losses.
+
+This behavior highlights the highly volatile nature of cryptocurrency trading environments.
+
+\subsection{Trade Size Distribution}
+
+Trade sizes showed strong right-skewed behavior, indicating the presence of high-capital participants.
+
+While most traders executed smaller positions, a minority of accounts contributed significantly larger trade sizes.
+
+\subsection{Fees vs Profitability}
+
+Higher trading fees generally corresponded with increased activity and larger position sizes.
+
+However, elevated trading activity did not consistently guarantee profitability.
+
+Several high-fee trades still resulted in substantial negative pnl outcomes.
+
+% -------------------------------------------------
+
+\section{Behavioral Analysis}
+
+\subsection{BUY vs SELL Distribution}
+
+BUY and SELL activity remained relatively balanced throughout the dataset.
+
+This indicates active market participation on both sides and suggests adaptive positioning behavior among traders.
+
+\subsection{Win Rate Across Sentiment Conditions}
+
+Trader success rates varied across different market sentiment conditions.
+
+Extreme Greed environments displayed the highest win rates, while Fear-driven conditions demonstrated weaker trading consistency.
+
+This suggests that emotional market environments influence execution quality and behavioral stability.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{avg_pnl_sentiment.png}
+\caption{Average Profitability Across Market Sentiment States}
+\end{figure}
+
+\subsection{Average Profitability by Sentiment}
+
+Interestingly, Extreme Fear conditions generated the highest average pnl values.
+
+This may indicate that disciplined or contrarian trading strategies performed more effectively during panic-driven market phases.
+
+Greed-oriented environments produced lower average pnl outcomes despite elevated market participation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{daily_trading_activity.png}
+\caption{Daily Trading Activity Trend}
+\end{figure}
+
+\subsection{Daily Trading Activity}
+
+Trading activity intensified significantly during late 2024 and early 2025.
+
+Multiple participation spikes indicated periods of elevated speculation and market volatility.
+
+The increasing activity trend reflects growing emotional engagement among traders.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Trader Profiling and Segmentation}
+
+Trader-level aggregation metrics were constructed using:
+
+\begin{itemize}
+    \item Total pnl
+    \item Average pnl
+    \item Pnl volatility
+    \item Average trade size
+    \item Total trading volume
+    \item Total fees
+    \item Win rate
+    \item Trade count
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{trader_clusters.png}
+\caption{Trader Segmentation Based on Performance and Activity}
+\end{figure}
+
+\subsection{Trader Clustering}
+
+KMeans clustering was applied to identify behavioral trader groups.
+
+The clustering process revealed distinct trader segments characterized by different profitability and activity patterns.
+
+Certain clusters displayed highly aggressive trading behavior with elevated profitability and trade frequency.
+
+Other clusters demonstrated lower profitability despite moderate participation levels.
+
+This segmentation highlights the diversity of trading behavior within the ecosystem.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Risk and Correlation Analysis}
+
+
+\subsection{Correlation Analysis}
+
+The correlation matrix revealed:
+
+\begin{itemize}
+    \item Strong positive correlation between trade size and fees
+    \item Weak direct correlation between sentiment score and pnl
+    \item Moderate relationship between pnl and trade efficiency metrics
+\end{itemize}
+
+The results suggest that profitability depends more heavily on execution quality and trading strategy rather than raw sentiment conditions alone.
+
+\subsection{Aggregate Profitability Trend}
+
+Aggregate trader profitability became substantially more volatile during late 2024 and early 2025.
+
+Large positive and negative pnl spikes indicated elevated speculative behavior and market instability.
+
+Despite short-term fluctuations, rolling profitability trends showed gradual upward momentum.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Sentiment Transition Analysis}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{sentiment_transition.png}
+\caption{Profitability During Sentiment Transitions}
+\end{figure}
+
+A transition-based behavioral framework was developed to analyze profitability during changing market emotions.
+
+Transitions between sentiment states produced significantly different profitability outcomes.
+
+Fear-to-Neutral and Fear-to-Greed transitions generated some of the strongest profitability levels.
+
+Certain abrupt emotional reversals produced negative profitability outcomes, indicating instability during uncertain market transitions.
+
+This analysis demonstrates that emotional market shifts can materially influence trader performance.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Key Findings}
+
+\begin{itemize}
+    \item Trader profitability and behavior varied significantly across market sentiment conditions.
+
+    \item Extreme Fear environments generated the highest average pnl outcomes despite lower market confidence.
+
+    \item Trading activity and profitability volatility increased sharply during late 2024 and early 2025.
+
+    \item A small subset of traders contributed disproportionately large profitability relative to the broader population.
+
+    \item Sentiment transition periods demonstrated substantial impact on trader performance and market stability.
+\end{itemize}
+
+% -------------------------------------------------
+
+\section{Strategic Recommendations}
+
+\begin{itemize}
+    \item Implement sentiment-aware risk management frameworks during emotionally volatile market phases.
+
+    \item Monitor trader behavior during sentiment transitions to identify instability and overexposure risk.
+
+    \item Develop trader profiling systems capable of distinguishing disciplined participants from speculative behavior.
+
+    \item Use volatility-sensitive position sizing during periods of elevated uncertainty.
+
+    \item Combine behavioral analytics with real-time market indicators for improved trading decision support.
+\end{itemize}
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Limitations}
+
+\begin{itemize}
+    \item The analysis relies primarily on historical execution and sentiment data.
+
+    \item Important market microstructure variables such as liquidation data and funding rates were unavailable.
+
+    \item The study focuses on observational relationships rather than direct causal inference.
+
+    \item Extreme pnl outliers may influence aggregate statistical behavior.
+\end{itemize}
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Future Work}
+
+Future improvements may include:
+
+\begin{itemize}
+    \item Predictive machine learning models for profitability forecasting
+
+    \item Real-time behavioral monitoring systems
+
+    \item Advanced anomaly detection techniques
+
+    \item Reinforcement learning based trading strategies
+
+    \item Integration of additional market indicators and volatility measures
+\end{itemize}
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section{Conclusion}
+
+This project demonstrated that cryptocurrency market sentiment plays a meaningful role in shaping trader behavior, profitability dynamics, and trading activity patterns.
+
+The analysis revealed substantial behavioral differences across Fear, Greed, and sentiment transition environments.
+
+By combining behavioral analytics, clustering techniques, and sentiment intelligence, the study provides valuable insights into market participant behavior within highly volatile crypto ecosystems.
+
+Overall, the findings highlight the importance of sentiment-aware trading strategies and behavioral risk management in modern cryptocurrency trading environments.
+
+% -------------------------------------------------
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+
+\section*{Acknowledgment}
+
+This report was developed as part of a Data Science Internship Assessment submission.
+
+The project combines quantitative analysis, behavioral finance concepts, and market sentiment intelligence to investigate cryptocurrency trading behavior using real-world trading datasets.
+
+\vspace{1cm}
+
+\begin{center}
+\textbf{Developed By: Bhavesh Gudlani}
+\end{center}
+
+\end{document}
