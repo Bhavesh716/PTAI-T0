@@ -236,7 +236,7 @@ The notebook includes:
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/crypto-trader-sentiment-analysis.git
+git clone https://github.com/Bhavesh716/PTAI-T0.git
 ```
 
 ---
@@ -244,7 +244,7 @@ git clone https://github.com/your-username/crypto-trader-sentiment-analysis.git
 ## 2. Navigate into the project
 
 ```bash
-cd crypto-trader-sentiment-analysis
+cd PTAI-T0
 ```
 
 ---
@@ -268,7 +268,7 @@ jupyter notebook
 ## 5. Open the notebook
 
 ```bash
-notebook/trader_sentiment_analysis.ipynb
+notebook/analysis.ipynb
 ```
 
 ---
@@ -325,7 +325,7 @@ report/final_report.pdf
 ## Jupyter Notebook
 
 ```bash
-notebook/trader_sentiment_analysis.ipynb
+notebook/analysis.ipynb
 ```
 
 ---
