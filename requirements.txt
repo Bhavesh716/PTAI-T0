@@ -1,1 +1,15 @@
-
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+plotly
+jupyter
+notebook
+scipy
+statsmodels
+missingno
+openpyxl
+xgboost
+lightgbm
+yellowbrick
