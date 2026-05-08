@@ -66,14 +66,14 @@ Using historical trading activity from Hyperliquid combined with the Bitcoin Fea
 # Repository Structure
 
 ```bash
-crypto-trader-sentiment-analysis/
+PTAI-T0/
 │
 ├── data/
 │   ├── historical_data.csv
 │   └── fear_greed_index.csv
 │
 ├── notebook/
-│   └── trader_sentiment_analysis.ipynb
+│   └── analysis.ipynb
 │
 ├── report/
 │   └── final_report.pdf
